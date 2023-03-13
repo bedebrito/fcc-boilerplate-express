@@ -11,14 +11,24 @@ app.use((req, res, next) => {
     next();
 });
 
+
 app.get("/", (req, res) => { res.sendFile(indexPath) });
+
 app.get("/json", (req, res) => {
     process.env.MESSAGE_STYLE==="uppercase" ? 
     res.json({"message": "HELLO JSON"}) : 
     res.json({"message": "Hello json"})
 });
-app.use("/public", express.static(publicPath));
 
+app.get("/now", (req, res, next) => {
+    req.time = new Date().toString();
+    next();
+}, (req, res) => {
+    res.json({"time": req.time});
+})
+
+
+app.use("/public", express.static(publicPath));
 
 
 
