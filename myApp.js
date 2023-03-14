@@ -1,16 +1,16 @@
-require('dotenv').config();
+require("dotenv").config();
 
-let express = require('express');
+const bodyParser = require("body-parser");
+let express = require("express");
 let app = express();
 
 let indexPath = __dirname + "/views/index.html";
 let publicPath = __dirname + "/public";
 
-app.use((req, res, next) => {
+app.use(bodyParser.urlencoded({extended: false}), (req, res, next) => {
     console.log(`${req.method} ${req.path} - ${req.ip}`);
     next();
 });
-
 
 app.get("/", (req, res) => { res.sendFile(indexPath) });
 
