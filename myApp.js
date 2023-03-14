@@ -31,6 +31,10 @@ app.get("/:word/echo", (req, res) => {
     res.json({"echo": req.params.word});
 });
 
+app.get("/name", (req, res) => {
+    let {first: firstName, last: lastName} = req.query;
+    res.json({"name": `${firstName} ${lastName}`});
+});
 
 app.use("/public", express.static(publicPath));
 
