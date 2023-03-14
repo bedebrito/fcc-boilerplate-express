@@ -12,6 +12,8 @@ app.use(bodyParser.urlencoded({extended: false}), (req, res, next) => {
     next();
 });
 
+app.use(bodyParser.json());
+
 app.get("/", (req, res) => { res.sendFile(indexPath) });
 
 app.get("/json", (req, res) => {
@@ -31,9 +33,13 @@ app.get("/:word/echo", (req, res) => {
     res.json({"echo": req.params.word});
 });
 
-app.get("/name", (req, res) => {
+
+app.route("/name").get((req, res)=>{
     let {first: firstName, last: lastName} = req.query;
     res.json({"name": `${firstName} ${lastName}`});
+}).post((req, res) => {
+    let {first: firstName, last: lastName} = req.body;
+    res.json({"name": `${firstName} ${lastName}`})
 });
 
 app.use("/public", express.static(publicPath));
